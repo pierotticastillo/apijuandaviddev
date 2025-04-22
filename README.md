@@ -43,7 +43,7 @@ Aplicación completa para gestión de libros con frontend en Vue 3 y backend con
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/pierotticastillo/bookstore-app.git
+git clone https://github.com/pierotticastillo/apijuandaviddev
 
 # Instalar dependencias
 pnpm install
