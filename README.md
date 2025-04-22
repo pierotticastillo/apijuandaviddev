@@ -45,11 +45,21 @@ Aplicación completa para gestión de libros con frontend en Vue 3 y backend con
 # Clonar repositorio
 git clone https://github.com/pierotticastillo/apijuandaviddev
 
+# Moverse a la carpeta del frontend
+cd frontend
+
+# Instalar dependencias
+pnpm install
+
+# Moverse a la carpeta del backend
+cd ..
+cd backend
+
 # Instalar dependencias
 pnpm install
 
 # Iniciar backend (json-server)
-pnpm run backend
+pnpm run dev
 
 # Iniciar frontend
 pnpm run dev
