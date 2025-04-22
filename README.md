@@ -88,6 +88,15 @@ bookstore-app/
 4. Haz push a la rama (`git push origin feature/nueva-funcionalidad`)
 5. Abre un Pull Request
 
+## 🙏 Agradecimientos
+
+[![YouTube Channel](https://img.shields.io/badge/📺_JuanDavidDev-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@juandavid_dev)
+
+Este proyecto fue desarrollado como parte de mi aprendizaje con el excelente material educativo del canal **JuanDavidDev**.  
+Aprecio profundamente el contenido de calidad que comparte con la comunidad de desarrollo.
+
+> *"Dar crédito no resta mérito, sino que muestra integridad profesional"*
+
 ## 📄 Licencia
 
 MIT © [PIEROTTI CASTILLO, Enrique Alejandro](https://github.com/pierotticastillo)
