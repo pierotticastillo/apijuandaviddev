@@ -12,13 +12,13 @@ Aplicación completa para gestión de libros con frontend en Vue 3 y backend con
 
 ## 🖼️ Capturas de Pantalla
 
-![List books View](screenshots/listbooks.png)
+![List books View](/screenshots/listbooks.png)
 
 ---
-![Edit books View](screenshots/editbooks.png) |
+![Edit books View](/screenshots/editbooks.png) |
 
 ---
-![New books View](screenshots/newbooks.png) |
+![New books View](/screenshots/newbooks.png) |
 
 ## 🛠️ Tecnologías Utilizadas
 
