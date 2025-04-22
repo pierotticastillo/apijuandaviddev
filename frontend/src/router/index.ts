@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import BooksView from '../views/BooksView.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,16 +8,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: BooksView,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/newbooks',
+      name: 'newbooks',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('../views/NewBooksView.vue'),
     },
+    {
+      path: '/editbooks/:id',
+      name: 'editbooks',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/EditBookView.vue'),
+    },
+    // Captura todas las rutas no definidas - Opción 1 (Redirige a Home)
+    // { path: '/:pathMatch(.*)*', redirect: '/' },
+    
+    // Opción 2 (Muestra componente 404)
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound }
   ],
 })
 
