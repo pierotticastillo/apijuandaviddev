@@ -1,37 +1,30 @@
 <script setup lang="ts">
+import type { Book } from '../shared/book.interface'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
-interface Book {
-  id: number
-  title: string
-  author: string
-  genre: string
-  year: number | string
-  ISBN: string
-  price: number | string
-  stock: number | string
-}
 
 const router = useRouter()
 const books = ref<Book[]>([])
 const loading = ref(false)
 const error = ref<string | null>(null)
 
+const apiUrl = import.meta.env.VITE_API_URL
+
 const fetchBooks = async () => {
   loading.value = true
   error.value = null
   try {
-    const response = await axios.get<Book[]>('http://localhost:3000/books')
-    books.value = response.data.map((book) => ({
-      ...book,
-      // Aseguramos que los valores numéricos sean números
-      price: typeof book.price === 'string' ? parseFloat(book.price) : book.price,
-      year: typeof book.year === 'string' ? parseInt(book.year) : book.year,
-      stock: typeof book.stock === 'string' ? parseInt(book.stock) : book.stock,
-    }))
+    const response = await axios.get<Book[]>(`${apiUrl}/books`)
+    books.value = response.data
+      .map((book) => ({
+        ...book,
+        price: typeof book.price === 'string' ? parseFloat(book.price) : book.price,
+        year: typeof book.year === 'string' ? parseInt(book.year) : book.year,
+        stock: typeof book.stock === 'string' ? parseInt(book.stock) : book.stock,
+      }))
+      .sort((a, b) => a.id - b.id)
   } catch (err) {
     error.value = 'Error al cargar los libros'
     Swal.fire({
@@ -58,7 +51,7 @@ const deleteBook = async (id: number, title: string) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.delete(`http://localhost:3000/books/${id}`)
+      await axios.delete(`${apiUrl}/books/${id}`) // Usa apiUrl aquí también
       books.value = books.value.filter((book) => book.id !== id)
       Swal.fire({
         title: '¡Eliminado!',
@@ -118,7 +111,7 @@ onMounted(() => {
             <td>{{ book.stock }}</td>
             <td class="actions">
               <router-link :to="`/editbooks/${book.id}`" class="edit-btn"> Editar </router-link>
-              <button @click="deleteBook(book.id, book.title)">Eliminar</button>
+              <button @click="deleteBook(book.id ?? 0, book.title)">Eliminar</button>
             </td>
           </tr>
         </tbody>

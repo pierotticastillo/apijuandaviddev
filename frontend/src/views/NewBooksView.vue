@@ -3,26 +3,19 @@ import { ref } from 'vue'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
-
-interface Book {
-  title: string
-  author: string
-  genre: string
-  year: number | string
-  ISBN: string
-  price: number | string
-  stock: number | string
-}
+import type { Book } from '../shared/book.interface'
 
 const router = useRouter()
+const API_URL = import.meta.env.VITE_API_URL
+
 const newBook = ref<Book>({
   title: '',
   author: '',
   genre: '',
   year: '',
   ISBN: '',
-  price: '',
-  stock: ''
+  price: 0,
+  stock: 0,
 })
 
 const validateForm = (): boolean => {
@@ -30,7 +23,18 @@ const validateForm = (): boolean => {
     Swal.fire('Error', 'El título es requerido', 'warning')
     return false
   }
-  // Puedes agregar más validaciones aquí
+  if (!newBook.value.author.trim()) {
+    Swal.fire('Error', 'El autor es requerido', 'warning')
+    return false
+  }
+  if (!newBook.value.genre.trim()) {
+    Swal.fire('Error', 'El género es requerido', 'warning')
+    return false
+  }
+  if (!newBook.value.year || isNaN(Number(newBook.value.year))) {
+    Swal.fire('Error', 'El año debe ser un número válido', 'warning')
+    return false
+  }
   return true
 }
 
@@ -38,28 +42,35 @@ const saveBook = async () => {
   if (!validateForm()) return
 
   try {
-    // Convertir tipos numéricos
-    const bookData = {
+    const bookToSave = {
       ...newBook.value,
-      year: Number(newBook.value.year),
+      year: String(newBook.value.year),
       price: Number(newBook.value.price),
-      stock: Number(newBook.value.stock)
+      stock: Number(newBook.value.stock),
     }
 
-    await axios.post('http://localhost:3000/books', bookData)
-    
+    await axios.post(`${API_URL}/books`, bookToSave)
+
     await Swal.fire({
       title: '¡Guardado!',
       text: 'El libro fue guardado exitosamente.',
       icon: 'success',
       timer: 2000,
-      showConfirmButton: false
+      showConfirmButton: false,
     })
-    
+
     router.push('/')
-  } catch (error) {
-    console.error('Error al guardar el libro:', error)
-    Swal.fire('Error', 'No se pudo guardar el libro', 'error')
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      Swal.fire(
+        'Error',
+        err.response?.data?.message?.join('<br>') || 'Error desconocido al guardar',
+        'error',
+      )
+    } else {
+      console.error('Error inesperado:', err)
+      Swal.fire('Error', 'Error inesperado', 'error')
+    }
   }
 }
 
@@ -70,11 +81,12 @@ const resetForm = () => {
     genre: '',
     year: '',
     ISBN: '',
-    price: '',
-    stock: ''
+    price: 0,
+    stock: 0,
   }
 }
 </script>
+
 
 <template>
   <main>
@@ -105,7 +117,7 @@ const resetForm = () => {
         <div class="form-group">
           <label>
             Año*
-            <input v-model="newBook.year" type="number" min="1000" max="2099" required placeholder="1943">
+            <input v-model="newBook.year" type="text" required  placeholder="1943"/>
           </label>
         </div>
 

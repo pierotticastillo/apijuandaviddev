@@ -3,17 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-
-interface Book {
-  id: number
-  title: string
-  author: string
-  genre: string
-  year: number
-  ISBN: string
-  price: number
-  stock: number
-}
+import type { Book } from '../shared/book.interface'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,22 +12,21 @@ const book = ref<Book>({
   title: '',
   author: '',
   genre: '',
-  year: 0,
+  year: '',
   ISBN: '',
   price: 0,
-  stock: 0
+  stock: 0,
 })
 const loading = ref(true)
 const error = ref<string | null>(null)
+const API_URL = import.meta.env.VITE_API_URL
 
 // Obtener libro al cargar
 onMounted(async () => {
   try {
-    const response = await axios.get<Book>(`http://localhost:3000/books/${route.params.id}`)
+    const response = await axios.get<Book>(`${API_URL}/books/${route.params.id}`)
     book.value = response.data
   } catch (err) {
-    error.value = 'Error al cargar el libro'
-    Swal.fire('Error', error.value, 'error')
     router.push('/')
   } finally {
     loading.value = false
@@ -47,19 +36,32 @@ onMounted(async () => {
 // Actualizar con PATCH (solo envía campos modificados)
 const updateBook = async () => {
   try {
-    await axios.patch(`http://localhost:3000/books/${book.value.id}`, book.value)
-    
+    const { id, ...bookToUpdate } = book.value
+    bookToUpdate.price = Number(bookToUpdate.price)
+    bookToUpdate.stock = Number(bookToUpdate.stock)
+
+    await axios.patch(`${API_URL}/books/${id}`, bookToUpdate)
+
     await Swal.fire({
       title: '¡Actualizado!',
       text: 'El libro se actualizó correctamente',
       icon: 'success',
       timer: 2000,
-      showConfirmButton: false
+      showConfirmButton: false,
     })
-    
+
     router.push(`/`)
   } catch (err) {
-    Swal.fire('Error', 'No se pudo actualizar el libro', 'error')
+    if (axios.isAxiosError(err)) {
+      Swal.fire(
+        'Error',
+        err.response?.data?.message?.join('<br>') || 'Error desconocido al actualizar',
+        'error',
+      )
+    } else {
+      console.error('Error inesperado:', err)
+      Swal.fire('Error', 'Error inesperado', 'error')
+    }
   }
 }
 </script>
@@ -68,57 +70,55 @@ const updateBook = async () => {
   <div class="edit-container">
     <div v-if="loading" class="loading">Cargando...</div>
     <div v-else-if="error" class="error">{{ error }}</div>
-    
+
     <div v-else class="edit-form">
-      <h1>Editar Libro <span>#{{ book.id }}</span></h1>
-      
+      <h1>
+        Editar Libro <span>#{{ book.id }}</span>
+      </h1>
+
       <form @submit.prevent="updateBook">
         <div class="form-group">
           <label>Título*</label>
-          <input v-model="book.title" type="text" required>
+          <input v-model="book.title" type="text" required />
         </div>
-        
+
         <div class="form-row">
           <div class="form-group">
             <label>Autor*</label>
-            <input v-model="book.author" type="text" required>
+            <input v-model="book.author" type="text" required />
           </div>
-          
+
           <div class="form-group">
             <label>Género*</label>
-            <input v-model="book.genre" type="text" required>
+            <input v-model="book.genre" type="text" required />
           </div>
         </div>
-        
+
         <div class="form-row">
           <div class="form-group">
             <label>Año*</label>
-            <input v-model.number="book.year" type="number" min="1000" max="2099" required>
+            <input v-model="book.year" type="text" required />
           </div>
-          
+
           <div class="form-group">
             <label>Stock*</label>
-            <input v-model.number="book.stock" type="number" min="0" required>
+            <input v-model.number="book.stock" type="number" min="0" required />
           </div>
         </div>
-        
+
         <div class="form-group">
           <label>ISBN*</label>
-          <input v-model="book.ISBN" type="text" required>
+          <input v-model="book.ISBN" type="text" required />
         </div>
-        
+
         <div class="form-group">
           <label>Precio*</label>
-          <input v-model.number="book.price" type="number" step="0.01" min="0" required>
+          <input v-model.number="book.price" type="number" step="0.01" min="0" required />
         </div>
-        
+
         <div class="form-actions">
-          <button type="button" @click="router.push('/')" class="cancel-btn">
-            Cancelar
-          </button>
-          <button type="submit" class="save-btn">
-            Guardar Cambios
-          </button>
+          <button type="button" @click="router.push('/')" class="cancel-btn">Cancelar</button>
+          <button type="submit" class="save-btn">Guardar Cambios</button>
         </div>
       </form>
     </div>
@@ -132,7 +132,8 @@ const updateBook = async () => {
   padding: 2rem;
 }
 
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   padding: 2rem;
 }
