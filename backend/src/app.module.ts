@@ -23,7 +23,7 @@ import { BooksModule } from './books/books.module';
         password: configService.get<string>('DATABASE_PASSWORD') || '',
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, // Carga automática de entidades
-        synchronize: true,      // ⚠️ solo en desarrollo
+        synchronize: true, // ⚠️ solo en desarrollo
         logging: true,
       }),
     }),

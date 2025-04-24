@@ -28,9 +28,9 @@ const router = createRouter({
     },
     // Captura todas las rutas no definidas - Opción 1 (Redirige a Home)
     // { path: '/:pathMatch(.*)*', redirect: '/' },
-    
+
     // Opción 2 (Muestra componente 404)
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound }
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
   ],
 })
 

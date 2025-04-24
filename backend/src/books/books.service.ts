@@ -34,13 +34,13 @@ export class BooksService {
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
-    const book = await this.findOne(id);  
+    const book = await this.findOne(id);
     await this.bookRepository.update(id, updateBookDto);
     return await this.findOne(id);
   }
 
   async remove(id: number) {
-    const book = await this.findOne(id); 
+    const book = await this.findOne(id);
     await this.bookRepository.delete(id);
     return book;
   }

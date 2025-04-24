@@ -87,7 +87,6 @@ const resetForm = () => {
 }
 </script>
 
-
 <template>
   <main>
     <h1>Agregar Nuevo Libro</h1>
@@ -95,21 +94,26 @@ const resetForm = () => {
       <div class="form-group">
         <label>
           Título*
-          <input v-model="newBook.title" type="text" required placeholder="El Principito">
+          <input v-model="newBook.title" type="text" required placeholder="El Principito" />
         </label>
       </div>
 
       <div class="form-group">
         <label>
           Autor*
-          <input v-model="newBook.author" type="text" required placeholder="Antoine de Saint-Exupéry">
+          <input
+            v-model="newBook.author"
+            type="text"
+            required
+            placeholder="Antoine de Saint-Exupéry"
+          />
         </label>
       </div>
 
       <div class="form-group">
         <label>
           Género*
-          <input v-model="newBook.genre" type="text" required placeholder="Fábula">
+          <input v-model="newBook.genre" type="text" required placeholder="Fábula" />
         </label>
       </div>
 
@@ -117,14 +121,14 @@ const resetForm = () => {
         <div class="form-group">
           <label>
             Año*
-            <input v-model="newBook.year" type="number" min="0" required  placeholder="1943"/>
+            <input v-model="newBook.year" type="number" min="0" required placeholder="1943" />
           </label>
         </div>
 
         <div class="form-group">
           <label>
             Stock*
-            <input v-model="newBook.stock" type="number" min="0" required placeholder="10">
+            <input v-model="newBook.stock" type="number" min="0" required placeholder="10" />
           </label>
         </div>
       </div>
@@ -132,24 +136,27 @@ const resetForm = () => {
       <div class="form-group">
         <label>
           ISBN*
-          <input v-model="newBook.ISBN" type="text" required placeholder="978-3-16-148410-0">
+          <input v-model="newBook.ISBN" type="text" required placeholder="978-3-16-148410-0" />
         </label>
       </div>
 
       <div class="form-group">
         <label>
           Precio*
-          <input v-model="newBook.price" type="number" step="0.01" min="0" required placeholder="19.99">
+          <input
+            v-model="newBook.price"
+            type="number"
+            step="0.01"
+            min="0"
+            required
+            placeholder="19.99"
+          />
         </label>
       </div>
 
       <div class="form-actions">
-        <button type="button" @click="resetForm" class="btn-secondary">
-          Limpiar
-        </button>
-        <button type="submit" class="btn-primary">
-          Guardar Libro
-        </button>
+        <button type="button" @click="resetForm" class="btn-secondary">Limpiar</button>
+        <button type="submit" class="btn-primary">Guardar Libro</button>
       </div>
     </form>
   </main>
