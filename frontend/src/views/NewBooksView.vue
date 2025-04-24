@@ -12,7 +12,7 @@ const newBook = ref<Book>({
   title: '',
   author: '',
   genre: '',
-  year: '',
+  year: 0,
   ISBN: '',
   price: 0,
   stock: 0,
@@ -44,7 +44,7 @@ const saveBook = async () => {
   try {
     const bookToSave = {
       ...newBook.value,
-      year: String(newBook.value.year),
+      year: Number(newBook.value.year),
       price: Number(newBook.value.price),
       stock: Number(newBook.value.stock),
     }
@@ -79,7 +79,7 @@ const resetForm = () => {
     title: '',
     author: '',
     genre: '',
-    year: '',
+    year: 0,
     ISBN: '',
     price: 0,
     stock: 0,
@@ -117,7 +117,7 @@ const resetForm = () => {
         <div class="form-group">
           <label>
             Año*
-            <input v-model="newBook.year" type="text" required  placeholder="1943"/>
+            <input v-model="newBook.year" type="number" min="0" required  placeholder="1943"/>
           </label>
         </div>
 

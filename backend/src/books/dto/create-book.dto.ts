@@ -4,6 +4,7 @@ import {
   IsNumber,
   Min,
   IsPositive,
+  IsInt,
 } from 'class-validator';
 
 export class CreateBookDto {
@@ -19,9 +20,10 @@ export class CreateBookDto {
   @IsNotEmpty()
   genre: string;
 
-  @IsString()
-  @IsNotEmpty()
-  year: string;
+  @IsNumber()
+  @IsInt()
+  @Min(0) // Ajusta el valor mínimo según necesites
+  year: number; // Cambiado a number
 
   @IsString()
   ISBN: string;

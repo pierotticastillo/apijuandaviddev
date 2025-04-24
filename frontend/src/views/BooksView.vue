@@ -20,6 +20,7 @@ const fetchBooks = async () => {
     books.value = response.data
       .map((book) => ({
         ...book,
+        year: typeof book.year === 'string' ? parseInt(book.year) : book.year,
         price: typeof book.price === 'string' ? parseFloat(book.price) : book.price,
         stock: typeof book.stock === 'string' ? parseInt(book.stock) : book.stock,
       }))

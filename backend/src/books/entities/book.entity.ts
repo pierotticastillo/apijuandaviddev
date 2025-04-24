@@ -14,8 +14,8 @@ export class Book {
   @Column()
   genre: string;
 
-  @Column()
-  year: string;
+  @Column('int') // Cambiado de string a number (int)
+  year: number; // Tipo cambiado a number
 
   @Column({ name: 'ISBN' })
   ISBN: string;

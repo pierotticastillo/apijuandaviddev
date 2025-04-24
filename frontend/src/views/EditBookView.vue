@@ -12,7 +12,7 @@ const book = ref<Book>({
   title: '',
   author: '',
   genre: '',
-  year: '',
+  year: 0,
   ISBN: '',
   price: 0,
   stock: 0,
@@ -97,7 +97,7 @@ const updateBook = async () => {
         <div class="form-row">
           <div class="form-group">
             <label>Año*</label>
-            <input v-model="book.year" type="text" required />
+            <input v-model="book.year" type="number" min="0" required />
           </div>
 
           <div class="form-group">
