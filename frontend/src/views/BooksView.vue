@@ -21,10 +21,9 @@ const fetchBooks = async () => {
       .map((book) => ({
         ...book,
         price: typeof book.price === 'string' ? parseFloat(book.price) : book.price,
-        year: typeof book.year === 'string' ? parseInt(book.year) : book.year,
         stock: typeof book.stock === 'string' ? parseInt(book.stock) : book.stock,
       }))
-      .sort((a, b) => a.id - b.id)
+      .sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
   } catch (err) {
     error.value = 'Error al cargar los libros'
     Swal.fire({
