@@ -12,8 +12,8 @@ importers:
         specifier: ^1.8.4
         version: 1.8.4
       sweetalert2:
-        specifier: 11.6.13
-        version: 11.6.13
+        specifier: 11.4.8
+        version: 11.4.8
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1041,8 +1041,8 @@ packages:
     resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
-  sweetalert2@11.6.13:
-    resolution: {integrity: sha512-n5yVF0FNx1lm4XzpPyb1HIaiptzODfVyeCzmB809tpK+1bPdoKoevKOxYjrtId75DV7xuIp4r6cjn8xUAB8dPQ==}
+  sweetalert2@11.4.8:
+    resolution: {integrity: sha512-BDS/+E8RwaekGSxCPUbPnsRAyQ439gtXkTF/s98vY2l9DaVEOMjGj1FaQSorfGREKsbbxGSP7UXboibL5vgTMA==}
 
   tinyglobby@0.2.13:
     resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
@@ -2120,7 +2120,7 @@ snapshots:
     dependencies:
       copy-anything: 3.0.5
 
-  sweetalert2@11.6.13: {}
+  sweetalert2@11.4.8: {}
 
   tinyglobby@0.2.13:
     dependencies:
